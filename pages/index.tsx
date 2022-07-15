@@ -9,10 +9,9 @@ import SocialForm from "../components/SocialForm";
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [socials, setSocials] = useState<object[]>([]);
-  const [social, setSocial] = useState<object>({})
+  const [social, setSocial] = useState<object>({});
   const submitHandler = () => {
-    setSocials([...socials, { ...social, id: Date.now() }])
-
+    setSocials([...socials, { ...social, id: Date.now() }]);
   };
   return (
     <div className={styles.container}>
@@ -23,22 +22,33 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <p>Socials</p>
-        <div>
-          <>
-            <Button variant="text" onClick={() => setIsOpen(true)}>
-              <AddIcon /> Add Social
-            </Button>
-            {isOpen ? <SocialForm setIsOpen={setIsOpen} setSocial={setSocial} social={social} submitHandler={submitHandler} /> : ""}
-            {socials && socials.map((s) => {
-              return <li key={s.id}>{s.type} - {s.link}</li>
-
-            })}
-          </>
-        </div>
+        <Paper elevation={2} className={styles.mainBox}>
+          <p>Socials</p>
+          <div>
+            <>
+              <Button variant="text" onClick={() => setIsOpen(true)}>
+                <AddIcon /> Add Social
+              </Button>
+              {isOpen && (
+                <SocialForm
+                  setIsOpen={setIsOpen}
+                  setSocial={setSocial}
+                  social={social}
+                  submitHandler={submitHandler}
+                />
+              )}
+              {socials &&
+                socials.map((s) => {
+                  return (
+                    <li key={s.id}>
+                      {s.type} - {s.link}
+                    </li>
+                  );
+                })}
+            </>
+          </div>
+        </Paper>
       </main>
-
-      <footer className={styles.footer}></footer>
     </div>
   );
 };

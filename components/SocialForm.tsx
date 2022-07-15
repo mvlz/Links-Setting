@@ -1,16 +1,15 @@
 import {
   Button,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   TextField,
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import LanguageSharpIcon from "@mui/icons-material/LanguageSharp";
-import FacebookSharpIcon from "@mui/icons-material/FacebookSharp";
+import formStyles from "../styles/SocialForm.module.css";
 const currencies = [
   {
     value: "instagram",
@@ -53,41 +52,51 @@ const SocialForm: React.FunctionComponent<{
     setCurrency(e.target.value);
   };
   return (
-    <div>
-      <form>
-        <TextField
-          id="outlined-basic"
-          label="type"
-          variant="outlined"
-          onChange={(e) => onChangeHandler(e)}
-          name="type"
-        />
-        <FormControl fullWidth>
-          <InputLabel id="label" onChange={(e) => onChangeHandler(e)}>
-            Link
-          </InputLabel>
-          <Select
-            labelId="label"
-            id="select"
-            value={currency}
-            name="link"
-            onChange={(e) => changeHandler(e)}
-          >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button variant="contained" onClick={submitHandler}>
-          Add
-        </Button>
-        <Button variant="outlined" onClick={() => setIsOpen(false)}>
-          cancel
-        </Button>
+    <Paper elevation={2}>
+      <form className={formStyles.socialForm}>
+        <p className={formStyles.title}>Add social</p>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <InputLabel id="label" onChange={(e) => onChangeHandler(e)}>
+                Link
+              </InputLabel>
+              <Select
+                labelId="label"
+                id="select"
+                value={currency}
+                name="link"
+                onChange={(e) => changeHandler(e)}
+              >
+                {currencies.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="type"
+              variant="outlined"
+              onChange={(e) => onChangeHandler(e)}
+              name="type"
+            />
+          </Grid>
+        </Grid>
+        <div className={formStyles.formBottom}>
+          <Button variant="contained" onClick={submitHandler}>
+            Add
+          </Button>
+          <Button variant="outlined" onClick={() => setIsOpen(false)}>
+            cancel
+          </Button>
+        </div>
       </form>
-    </div>
+    </Paper>
   );
 };
 
