@@ -1,5 +1,5 @@
 import itemStyles from "../styles/SocialItem.module.css";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -26,7 +26,10 @@ const SocialItem = ({ social, onDelete }: IProps) => {
     setIsOpen(false);
   };
   return (
-    <div className={itemStyles.socialItem}>
+    <Grid
+      sx={{ bgcolor: "background.middle" }}
+      className={itemStyles.socialItem}
+    >
       <div>
         <p>
           {type} &nbsp; link: {link}
@@ -48,7 +51,7 @@ const SocialItem = ({ social, onDelete }: IProps) => {
           id={id}
         />
       )}
-    </div>
+    </Grid>
   );
 };
 

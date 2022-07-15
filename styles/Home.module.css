@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 0;
 }
 
 .main {
@@ -11,10 +11,14 @@
   max-width: 50rem;
   margin: auto;
 }
-
 .mainBox {
   width: 100%;
   padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
 }
 
 .title a {
