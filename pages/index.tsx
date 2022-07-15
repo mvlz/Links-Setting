@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import SocialForm from "../components/SocialForm";
 import SocialItem from "../components/SocialItem";
+import SimpleDialogDemo from "../components/ConfirmModal";
 interface Social {
   id: number;
   type?: string;
@@ -18,6 +19,12 @@ const Home: NextPage = () => {
   const submitHandler = () => {
     setSocials([...socials, { ...social, id: Date.now() }]);
   };
+  const onDelete = (id: number) => {
+    const cloneSocials = [...socials];
+    const filteredsocials = cloneSocials.filter((s) => s.id !== id);
+    setSocials(filteredsocials);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -46,8 +53,14 @@ const Home: NextPage = () => {
               />
             )}
             {socials &&
-              socials.map((s) => {
-                return <SocialItem key={s.id} {...s} />;
+              socials.map((social) => {
+                return (
+                  <SocialItem
+                    key={social.id}
+                    social={social}
+                    onDelete={onDelete}
+                  />
+                );
               })}
           </div>
         </Paper>
