@@ -29,7 +29,12 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <Paper elevation={2} className={styles.mainBox}>
           <div>
-            <Button variant="text" onClick={() => setIsOpen(true)}>
+            <Button
+              variant="text"
+              size="small"
+              disabled={isOpen}
+              onClick={() => setIsOpen(true)}
+            >
               <AddIcon /> Add Social
             </Button>
             {isOpen && (
