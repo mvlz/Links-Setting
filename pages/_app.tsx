@@ -4,6 +4,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { PaletteMode } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import withRoot from "./withRoot";
+import { useTranslation } from "react-i18next";
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
@@ -46,6 +48,15 @@ function getActiveTheme(themeMode: "light" | "dark") {
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTheme, setActiveTheme] = useState(lightModeTheme);
   const [selectedTheme, setSelectedTheme] = useState<"light" | "dark">("light");
+  const { i18n } = useTranslation();
+
+  let dir = i18n.dir();
+  let lang = i18n.language;
+
+  useEffect(() => {
+    document.querySelector("html").setAttribute("dir", dir);
+    document.querySelector("html").setAttribute("lang", lang);
+  }, [lang, dir]);
 
   const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
     const desiredTheme = selectedTheme === "light" ? "dark" : "light";
@@ -62,4 +73,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   );
 }
-export default MyApp;
+export default withRoot(MyApp);

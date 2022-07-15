@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import SocialForm from "../components/SocialForm";
 import SocialItem from "../components/SocialItem";
+import { Trans, useTranslation } from "react-i18next";
 interface Social {
   id: number;
   type?: string;
@@ -26,7 +27,11 @@ const Home: NextPage = (props: HomeProps) => {
     const filteredsocials = cloneSocials.filter((s) => s.id !== id);
     setSocials(filteredsocials);
   };
+  const { t, i18n } = useTranslation();
 
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -37,6 +42,10 @@ const Home: NextPage = (props: HomeProps) => {
 
       <Grid sx={{ bgcolor: "background.default" }} className={styles.wrapper}>
         <div className={styles.main}>
+          <div>
+            <button onClick={() => changeLanguage("fa")}> فارسی</button>
+            <button onClick={() => changeLanguage("en")}>English</button>
+          </div>
           <Button onClick={props.toggleTheme} color={"info"}>
             Toggle Theme
           </Button>
@@ -47,7 +56,8 @@ const Home: NextPage = (props: HomeProps) => {
               disabled={isOpen}
               onClick={() => setIsOpen(true)}
             >
-              <AddIcon /> Add Social
+              <AddIcon />
+              <Trans i18nKey="hBtn">trans</Trans>
             </Button>
             {isOpen && (
               <SocialForm
