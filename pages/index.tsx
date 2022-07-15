@@ -1,4 +1,4 @@
-import { Button, Paper } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -6,13 +6,15 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import SocialForm from "../components/SocialForm";
 import SocialItem from "../components/SocialItem";
-import SimpleDialogDemo from "../components/ConfirmModal";
 interface Social {
   id: number;
   type?: string;
   link?: string;
 }
-const Home: NextPage = () => {
+type HomeProps = {
+  toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
+};
+const Home: NextPage = (props: HomeProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [socials, setSocials] = useState<Social[]>([]);
   const [social, setSocial] = useState<Social | null>(null);
@@ -33,9 +35,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <Paper elevation={2} className={styles.mainBox}>
-          <div>
+      <Grid sx={{ bgcolor: "background.default" }} className={styles.wrapper}>
+        <div className={styles.main}>
+          <Button onClick={props.toggleTheme} color={"info"}>
+            Toggle Theme
+          </Button>
+          <Paper elevation={2} className={styles.mainBox}>
             <Button
               variant="text"
               size="small"
@@ -62,9 +67,9 @@ const Home: NextPage = () => {
                   />
                 );
               })}
-          </div>
-        </Paper>
-      </main>
+          </Paper>
+        </div>
+      </Grid>
     </div>
   );
 };
