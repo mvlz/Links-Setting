@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import formStyles from "../styles/SocialForm.module.css";
-const currencies = [
+const optionList = [
   {
     value: "instagram",
     label: "instagram",
@@ -42,14 +42,25 @@ const SocialForm: React.FunctionComponent<{
   social: {};
   submitHandler: () => void;
 }> = ({ setIsOpen, setSocial, social, submitHandler }) => {
-  const [currency, setCurrency] = React.useState("instagram");
+  const [option, setOption] = useState("");
+  const [type, setType] = useState("");
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSocial({ ...social, [e.target.name]: e.target.value });
   };
-  const changeHandler = (e) => {
+  const changeLinkHandler = (e: any): void => {
     onChangeHandler(e);
-    setCurrency(e.target.value);
+    setOption(e.target.value);
+  };
+  const changeTypeHandler = (e: any): void => {
+    onChangeHandler(e);
+    setType(e.target.value);
+  };
+  const clickHandler = (): void => {
+    submitHandler();
+    setOption("");
+    setType("");
+    setSocial({});
   };
   return (
     <Paper elevation={2}>
@@ -58,17 +69,16 @@ const SocialForm: React.FunctionComponent<{
         <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
-              <InputLabel id="label" onChange={(e) => onChangeHandler(e)}>
-                Link
-              </InputLabel>
+              <InputLabel id="label">Link</InputLabel>
               <Select
                 labelId="label"
                 id="select"
-                value={currency}
+                value={option}
                 name="link"
-                onChange={(e) => changeHandler(e)}
+                label="Link"
+                onChange={(e) => changeLinkHandler(e)}
               >
-                {currencies.map((option) => (
+                {optionList.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -82,13 +92,14 @@ const SocialForm: React.FunctionComponent<{
               id="outlined-basic"
               label="type"
               variant="outlined"
-              onChange={(e) => onChangeHandler(e)}
+              onChange={(e) => changeTypeHandler(e)}
               name="type"
+              value={type}
             />
           </Grid>
         </Grid>
         <div className={formStyles.formBottom}>
-          <Button variant="contained" onClick={submitHandler}>
+          <Button variant="contained" onClick={clickHandler}>
             Add
           </Button>
           <Button variant="outlined" onClick={() => setIsOpen(false)}>
