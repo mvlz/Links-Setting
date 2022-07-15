@@ -1,5 +1,7 @@
 .socialForm {
   padding: 1rem;
+  border-radius: 0.75rem;
+  background-color: #f8f8ff;
 }
 .title {
   margin-bottom: 1rem;
