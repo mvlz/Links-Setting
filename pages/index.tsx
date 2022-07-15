@@ -1,15 +1,20 @@
-import { Button, Paper, TextField } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import SocialForm from "../components/SocialForm";
-
+import SocialItem from "../components/SocialItem";
+interface Social {
+  id: number;
+  type?: string;
+  link?: string;
+}
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [socials, setSocials] = useState<object[]>([]);
-  const [social, setSocial] = useState<object>({});
+  const [socials, setSocials] = useState<Social[]>([]);
+  const [social, setSocial] = useState<Social | null>(null);
   const submitHandler = () => {
     setSocials([...socials, { ...social, id: Date.now() }]);
   };
@@ -23,29 +28,22 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <Paper elevation={2} className={styles.mainBox}>
-          <p>Socials</p>
           <div>
-            <>
-              <Button variant="text" onClick={() => setIsOpen(true)}>
-                <AddIcon /> Add Social
-              </Button>
-              {isOpen && (
-                <SocialForm
-                  setIsOpen={setIsOpen}
-                  setSocial={setSocial}
-                  social={social}
-                  submitHandler={submitHandler}
-                />
-              )}
-              {socials &&
-                socials.map((s) => {
-                  return (
-                    <li key={s.id}>
-                      {s.type} - {s.link}
-                    </li>
-                  );
-                })}
-            </>
+            <Button variant="text" onClick={() => setIsOpen(true)}>
+              <AddIcon /> Add Social
+            </Button>
+            {isOpen && (
+              <SocialForm
+                setIsOpen={setIsOpen}
+                setSocial={setSocial}
+                social={social}
+                submitHandler={submitHandler}
+              />
+            )}
+            {socials &&
+              socials.map((s) => {
+                return <SocialItem key={s.id} {...s} />;
+              })}
           </div>
         </Paper>
       </main>
