@@ -1,0 +1,29 @@
+{
+  "socials": [
+    {
+      "type": "website",
+      "link": "https://",
+      "id": 1657970724122
+    },
+    {
+      "type": "instagram",
+      "link": "https://",
+      "id": 1657970740896
+    },
+    {
+      "type": "tweeter",
+      "link": "https://",
+      "id": 1657970731544
+    },
+    {
+      "type": "facebook",
+      "link": "hiiiiii",
+      "id": 1657970740897
+    },
+    {
+      "type": "linkedin",
+      "link": "https://linkedin.com",
+      "id": 1657970740898
+    }
+  ]
+}
