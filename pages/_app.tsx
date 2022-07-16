@@ -6,6 +6,7 @@ import { PaletteMode } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import withRoot from "./withRoot";
 import { useTranslation } from "react-i18next";
+import Layout from "../components/Layout";
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
@@ -58,7 +59,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     document.querySelector("html").setAttribute("lang", lang);
   }, [lang, dir]);
 
-  const toggleTheme: React.MouseEventHandler<HTMLAnchorElement> = () => {
+  const toggleTheme: React.MouseEventHandler<HTMLButtonElement> = () => {
     const desiredTheme = selectedTheme === "light" ? "dark" : "light";
 
     setSelectedTheme(desiredTheme);
@@ -69,7 +70,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={activeTheme}>
-      <Component {...pageProps} toggleTheme={toggleTheme} />
+      <Layout toggleTheme={toggleTheme}>
+        <Component {...pageProps} />
+      </Layout>
     </ThemeProvider>
   );
 }
