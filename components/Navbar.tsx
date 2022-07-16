@@ -1,13 +1,13 @@
 import navbarStyles from "../styles/Navbar.module.css";
-import { Button, Grid, useTheme } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
-type LayoutProps = {
+type NavProps = {
   toggleTheme?: React.MouseEventHandler<HTMLButtonElement>;
 };
-const Navbar = (props: LayoutProps) => {
+const Navbar = (props: NavProps) => {
   const { i18n, t } = useTranslation();
   const { palette } = useTheme();
 
