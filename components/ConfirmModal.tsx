@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Social } from "../ts/interfaces";
+import { deleteData } from "../services/CRUDServices";
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
@@ -34,6 +35,12 @@ const ConfirmModal = ({
     }
   };
   const { t } = useTranslation();
+  const deleteHandler = async () => {
+    try {
+      await deleteData(social.id);
+    } catch (error) {}
+    onDelete(social.id);
+  };
   return (
     <div>
       <Dialog
@@ -62,7 +69,7 @@ const ConfirmModal = ({
           </Button>
           <Button
             disabled={isDisable}
-            onClick={() => onDelete(social.id)}
+            onClick={deleteHandler}
             size="small"
             variant="contained"
           >
