@@ -1,10 +1,11 @@
+import { Social } from "../ts/interfaces";
 import http from "./HttpService";
 
 export function getAllData() {
     return http.get('/socials')
 }
 
-export function addNewData(data: {}) {
+export function addNewData(data: Social) {
     const token = 'Secure Token'
     const header = {
         headers: {
@@ -18,6 +19,6 @@ export function deleteData(id: number) {
     return http.delete(`/socials/${id}`)
 }
 
-export function getOneData(id: number) {
-    return http.get(`/socials/${id}`)
+export function updateData(id: number, updatedItem: {}) {
+    return http.put(`/socials/${id}/`, updatedItem)
 }

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { addNewData } from "../services/CRUDServices";
+import { addNewData, updateData } from "../services/CRUDServices";
 import formStyles from "../styles/SocialForm.module.css";
 import { Social } from "../ts/interfaces";
 import { optionList } from "../utils/socialsList";
@@ -59,6 +59,9 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
         id: editedSocial?.id,
       };
       setSocials(cloneSocials);
+      updateData(editedSocial?.id, { type, link: option }).catch((er) =>
+        console.log(er)
+      );
     }
     setIsOpen(false);
   };
