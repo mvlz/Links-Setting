@@ -10,17 +10,24 @@ import {
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { addNewData } from "../services/CRUDServices";
 import formStyles from "../styles/SocialForm.module.css";
 import { Social } from "../ts/interfaces";
+import { optionList } from "../utils/socialsList";
 
-const SocialForm: React.FunctionComponent<{
+interface FormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setSocial: Dispatch<SetStateAction<Social | null>>;
-  social: Social | null;
-  submitHandler: () => void;
-}> = ({ setIsOpen, setSocial, social, submitHandler }) => {
+  setSocials: Dispatch<SetStateAction<Social[]>>;
+  socials: Social[];
+}
+const SocialForm: React.FunctionComponent<FormProps> = ({
+  setIsOpen,
+  setSocials,
+  socials,
+}) => {
   const [option, setOption] = useState("");
   const [type, setType] = useState("");
+  const [social, setSocial] = useState<Social | null>(null);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSocial({ ...social, [e.target.name]: e.target.value });
@@ -33,6 +40,11 @@ const SocialForm: React.FunctionComponent<{
     onChangeHandler(e);
     setType(e.target.value);
   };
+  const submitHandler = () => {
+    setSocials([...socials, { ...social, id: Date.now() }]);
+    addCommentHandler(social);
+    setIsOpen(false);
+  };
   const clickHandler = (): void => {
     submitHandler();
     setOption("");
@@ -41,32 +53,11 @@ const SocialForm: React.FunctionComponent<{
   };
   const { t } = useTranslation();
 
-  const optionList = [
-    {
-      value: "instagram",
-      label: t("instagram"),
-    },
-    {
-      value: "telegram",
-      label: t("telegram"),
-    },
-    {
-      value: "tweeter",
-      label: t("tweeter"),
-    },
-    {
-      value: "facebook",
-      label: t("facebook"),
-    },
-    {
-      value: "website",
-      label: t("website"),
-    },
-    {
-      value: "linkedin",
-      label: t("linkedin"),
-    },
-  ];
+  const addCommentHandler = async (social: Social) => {
+    try {
+      await addNewData(social);
+    } catch (error) {}
+  };
   return (
     <Container
       sx={{ bgcolor: "background.middle" }}
@@ -88,7 +79,7 @@ const SocialForm: React.FunctionComponent<{
               >
                 {optionList.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                    {t(`${option.label}`)}
                   </MenuItem>
                 ))}
               </Select>

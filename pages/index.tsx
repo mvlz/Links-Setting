@@ -7,16 +7,11 @@ import SocialForm from "../components/SocialForm";
 import SocialItem from "../components/SocialItem";
 import { Trans, useTranslation } from "react-i18next";
 import { Social } from "../ts/interfaces";
-import { addNewData, getAllData } from "../services/CRUDServices";
+import { getAllData } from "../services/CRUDServices";
 
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [socials, setSocials] = useState<Social[]>([]);
-  const [social, setSocial] = useState<Social | null>(null);
-  const submitHandler = () => {
-    setSocials([...socials, { ...social, id: Date.now() }]);
-    addCommentHandler(social);
-  };
   const onDelete = (id: number) => {
     const cloneSocials = [...socials];
     const filteredsocials = cloneSocials.filter((s) => s.id !== id);
@@ -26,11 +21,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     getAllData().then((res) => setSocials(res.data));
   }, []);
-  const addCommentHandler = async (social: Social) => {
-    try {
-      await addNewData(social);
-    } catch (error) {}
-  };
   return (
     <Paper elevation={2} className={styles.mainBox}>
       <p className={styles.title}> {t("title")}</p>
@@ -46,9 +36,8 @@ const Home: NextPage = () => {
       {isOpen && (
         <SocialForm
           setIsOpen={setIsOpen}
-          setSocial={setSocial}
-          social={social}
-          submitHandler={submitHandler}
+          setSocials={setSocials}
+          socials={socials}
         />
       )}
       {socials &&
