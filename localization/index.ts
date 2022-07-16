@@ -29,6 +29,7 @@ i18n
                     confirmField: "Confirm*",
                     userSetting: "User Setting",
                     editTitle: "Edit Social",
+                    validation: "This field is required.",
                 },
             },
             fa: {
@@ -53,6 +54,7 @@ i18n
                     confirmField: "تایید*",
                     userSetting: "تنظیمات کاربری",
                     editTitle: "ویرایش مسیر ارتباطی",
+                    validation: "پر کردن این فیلد الزامی است.",
                 }
             }
         },

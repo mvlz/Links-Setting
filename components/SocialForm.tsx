@@ -2,6 +2,7 @@ import {
   Button,
   Container,
   FormControl,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -19,6 +20,8 @@ import { addNewData, updateData } from "../services/CRUDServices";
 import formStyles from "../styles/SocialForm.module.css";
 import { Social } from "../ts/interfaces";
 import { optionList } from "../utils/socialsList";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 interface FormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -34,36 +37,41 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
   editedSocial,
   refetch,
 }) => {
-  const [option, setOption] = useState("");
-  const [type, setType] = useState("");
   const [social, setSocial] = useState<Social | null>(null);
+  const { t } = useTranslation();
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setSocial({ ...social, [e.target.name]: e.target.value });
+  const initialValues = {
+    type: "",
+    link: "",
   };
-  const changeLinkHandler = (e: any): void => {
-    onChangeHandler(e);
-    setOption(e.target.value);
-  };
-  const changeTypeHandler = (e: any): void => {
-    onChangeHandler(e);
-    setType(e.target.value);
-  };
+  const validationSchema = Yup.object({
+    type: Yup.string().required(`${t("validation")}`),
+    link: Yup.string()
+      .url()
+      .required(`${t("validation")}`),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    submitHandler,
+    validationSchema,
+    validateOnMount: true,
+  });
   const submitHandler = () => {
     if (!isEdited) {
       AddSocialAPI(social);
     } else {
-      updateSocial(editedSocial?.id, { type, link: option });
+      updateSocial(editedSocial?.id, {
+        type: formik.values.type,
+        link: formik.values.link,
+      });
     }
     setIsOpen(false);
   };
   const clickHandler = (): void => {
     submitHandler();
-    setOption("");
-    setType("");
     setSocial(null);
   };
-  const { t } = useTranslation();
 
   const AddSocialAPI = async (social: Social) => {
     const { data } = await addNewData(social);
@@ -76,11 +84,13 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
     return data;
   };
   useEffect(() => {
-    if (isEdited) {
-      setOption(editedSocial?.link);
-      setType(editedSocial?.type);
-    }
-  }, []);
+    setSocial({
+      type: formik.values.type,
+      link: formik.values.link,
+      id: Date.now(),
+    });
+  }, [formik.values.type, formik.values.link]);
+
   return (
     <Container
       sx={{ bgcolor: "background.middle" }}
@@ -96,13 +106,13 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
               <InputLabel id="label">{t("typeField")}</InputLabel>
+
               <Select
                 labelId="label"
                 id="select"
-                value={type}
-                name="type"
                 label="Type"
-                onChange={(e) => changeTypeHandler(e)}
+                error={formik.touched.type && !!formik.errors.type}
+                {...formik.getFieldProps("type")}
               >
                 {optionList.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -110,6 +120,11 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText className={formStyles.error}>
+                {formik.errors.type &&
+                  formik.touched.type &&
+                  `${formik.errors.type}`}
+              </FormHelperText>
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={8}>
@@ -118,10 +133,14 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
               id="outlined-basic"
               label={t("linkField")}
               variant="outlined"
-              onChange={(e) => changeLinkHandler(e)}
-              name="link"
-              value={option}
+              error={formik.touched.link && !!formik.errors.link}
+              {...formik.getFieldProps("link")}
             />
+            <FormHelperText className={formStyles.error}>
+              {formik.errors.link &&
+                formik.touched.link &&
+                `${formik.errors.link}`}
+            </FormHelperText>
           </Grid>
         </Grid>
         <div className={formStyles.formBottom}>
