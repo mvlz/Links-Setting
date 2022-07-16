@@ -14,15 +14,9 @@ import { deleteData } from "../services/CRUDServices";
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
-  onDelete: (id: number) => void;
   social: Social;
 }
-const ConfirmModal = ({
-  isOpen,
-  handleClose,
-  onDelete,
-  social,
-}: ModalProps) => {
+const ConfirmModal = ({ isOpen, handleClose, social }: ModalProps) => {
   const [isDisable, setIsDisable] = useState(true);
 
   const confirmHandler = (
@@ -38,8 +32,8 @@ const ConfirmModal = ({
   const deleteHandler = async () => {
     try {
       await deleteData(social.id);
+      handleClose();
     } catch (error) {}
-    onDelete(social.id);
   };
   return (
     <div>

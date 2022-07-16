@@ -29,23 +29,10 @@ const Home: NextPage = () => {
         <AddIcon />
         <Trans i18nKey="hBtn">trans</Trans>
       </Button>
-      {isOpen && (
-        <SocialForm
-          setIsOpen={setIsOpen}
-          setSocials={setSocials}
-          socials={socials}
-        />
-      )}
+      {isOpen && <SocialForm setIsOpen={setIsOpen} />}
       {socials &&
         socials.map((social) => {
-          return (
-            <SocialItem
-              key={social.id}
-              social={social}
-              setSocials={setSocials}
-              socials={socials}
-            />
-          );
+          return <SocialItem key={social.id} social={social} />;
         })}
     </Paper>
   );

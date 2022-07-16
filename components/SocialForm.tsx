@@ -17,15 +17,11 @@ import { optionList } from "../utils/socialsList";
 
 interface FormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setSocials: Dispatch<SetStateAction<Social[]>>;
-  socials: Social[];
   isEdited?: boolean;
   editedSocial?: Social;
 }
 const SocialForm: React.FunctionComponent<FormProps> = ({
   setIsOpen,
-  setSocials,
-  socials,
   isEdited,
   editedSocial,
 }) => {
@@ -46,19 +42,8 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
   };
   const submitHandler = () => {
     if (!isEdited) {
-      setSocials([...socials, { ...social, id: Date.now() }]);
       AddSocialAPI(social);
     } else {
-      const cloneSocials = [...socials];
-      const editedItemIndex = cloneSocials.findIndex(
-        (t) => t.id === editedSocial?.id
-      );
-      cloneSocials[editedItemIndex] = {
-        type: type,
-        link: option,
-        id: editedSocial?.id,
-      };
-      setSocials(cloneSocials);
       updateData(editedSocial?.id, { type, link: option }).catch((er) =>
         console.log(er)
       );

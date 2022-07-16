@@ -9,11 +9,9 @@ import { Social } from "../ts/interfaces";
 import SocialForm from "./SocialForm";
 interface IProps {
   social: Social;
-  setSocials: Dispatch<SetStateAction<Social[]>>;
-  socials: Social[];
 }
 
-const SocialItem = ({ social, setSocials, socials }: IProps) => {
+const SocialItem = ({ social }: IProps) => {
   const { type, link } = social;
   const [isOpen, setIsOpen] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -25,15 +23,9 @@ const SocialItem = ({ social, setSocials, socials }: IProps) => {
   const handleClose = (): void => {
     setIsOpen(false);
   };
-  const editHandler = (id: number): void => {
+  const editHandler = (): void => {
     setIsEdited(true);
   };
-  const onDelete = (id: number) => {
-    const cloneSocials = [...socials];
-    const filteredsocials = cloneSocials.filter((s) => s.id !== id);
-    setSocials(filteredsocials);
-  };
-
   const { t } = useTranslation();
 
   return (
@@ -56,11 +48,7 @@ const SocialItem = ({ social, setSocials, socials }: IProps) => {
           >
             <DeleteIcon /> {t("dBtn")}
           </Button>
-          <Button
-            variant="text"
-            size="small"
-            onClick={() => editHandler(social.id)}
-          >
+          <Button variant="text" size="small" onClick={editHandler}>
             <EditIcon /> {t("eBtn")}
           </Button>
         </div>
@@ -68,7 +56,6 @@ const SocialItem = ({ social, setSocials, socials }: IProps) => {
           <ConfirmModal
             isOpen={isOpen}
             handleClose={handleClose}
-            onDelete={onDelete}
             social={social}
           />
         )}
@@ -78,8 +65,6 @@ const SocialItem = ({ social, setSocials, socials }: IProps) => {
           setIsOpen={setIsEdited}
           isEdited={isEdited}
           editedSocial={social}
-          socials={socials}
-          setSocials={setSocials}
         />
       )}
     </Grid>
