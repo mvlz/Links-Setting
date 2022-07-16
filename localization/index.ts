@@ -27,6 +27,7 @@ i18n
                     confirmText1: `For delete social`,
                     confirmText2: `please fill "Confirm".`,
                     confirmField: "Confirm*",
+                    userSetting: "User Setting",
                 },
             },
             fa: {
@@ -49,6 +50,7 @@ i18n
                     confirmText1: `برای حذف مسیر ارتباطی`,
                     confirmText2: `لطفا "تایید" را وارد نمایید.`,
                     confirmField: "تایید*",
+                    userSetting: "تنظیمات کاربری",
                 }
             }
         },
