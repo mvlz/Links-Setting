@@ -12,11 +12,7 @@ import { getAllData } from "../services/CRUDServices";
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [socials, setSocials] = useState<Social[]>([]);
-  const onDelete = (id: number) => {
-    const cloneSocials = [...socials];
-    const filteredsocials = cloneSocials.filter((s) => s.id !== id);
-    setSocials(filteredsocials);
-  };
+
   const { t } = useTranslation();
   useEffect(() => {
     getAllData().then((res) => setSocials(res.data));
@@ -43,7 +39,12 @@ const Home: NextPage = () => {
       {socials &&
         socials.map((social) => {
           return (
-            <SocialItem key={social.id} social={social} onDelete={onDelete} />
+            <SocialItem
+              key={social.id}
+              social={social}
+              setSocials={setSocials}
+              socials={socials}
+            />
           );
         })}
     </Paper>
