@@ -8,7 +8,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { addNewData } from "../services/CRUDServices";
 import formStyles from "../styles/SocialForm.module.css";
@@ -19,11 +19,15 @@ interface FormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setSocials: Dispatch<SetStateAction<Social[]>>;
   socials: Social[];
+  isEdited?: boolean;
+  editedSocial?: Social;
 }
 const SocialForm: React.FunctionComponent<FormProps> = ({
   setIsOpen,
   setSocials,
   socials,
+  isEdited,
+  editedSocial,
 }) => {
   const [option, setOption] = useState("");
   const [type, setType] = useState("");
@@ -41,8 +45,21 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
     setType(e.target.value);
   };
   const submitHandler = () => {
-    setSocials([...socials, { ...social, id: Date.now() }]);
-    addCommentHandler(social);
+    if (!isEdited) {
+      setSocials([...socials, { ...social, id: Date.now() }]);
+      AddSocialAPI(social);
+    } else {
+      const cloneSocials = [...socials];
+      const editedItemIndex = cloneSocials.findIndex(
+        (t) => t.id === editedSocial?.id
+      );
+      cloneSocials[editedItemIndex] = {
+        type: type,
+        link: option,
+        id: editedSocial?.id,
+      };
+      setSocials(cloneSocials);
+    }
     setIsOpen(false);
   };
   const clickHandler = (): void => {
@@ -53,18 +70,26 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
   };
   const { t } = useTranslation();
 
-  const addCommentHandler = async (social: Social) => {
+  const AddSocialAPI = async (social: Social) => {
     try {
       await addNewData(social);
     } catch (error) {}
   };
+  useEffect(() => {
+    if (isEdited) {
+      setOption(editedSocial?.link);
+      setType(editedSocial?.type);
+    }
+  }, []);
   return (
     <Container
       sx={{ bgcolor: "background.middle" }}
       className={formStyles.formWrapper}
     >
       <form className={formStyles.socialForm}>
-        <p className={formStyles.title}>{t("hBtn")}</p>
+        <p className={formStyles.title}>
+          {isEdited ? `Edit Social ${editedSocial?.type}` : t("hBtn")}
+        </p>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
@@ -99,7 +124,7 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
         </Grid>
         <div className={formStyles.formBottom}>
           <Button variant="contained" onClick={clickHandler}>
-            {t("sBtn")}
+            {isEdited ? `Edit Social ${editedSocial?.type}` : t("sBtn")}
           </Button>
           <Button variant="outlined" onClick={() => setIsOpen(false)}>
             {t("cBtn")}

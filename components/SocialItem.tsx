@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmModal from "./ConfirmModal";
 import { useTranslation } from "react-i18next";
 import { Social } from "../ts/interfaces";
+import SocialForm from "./SocialForm";
 interface IProps {
   social: Social;
   setSocials: Dispatch<SetStateAction<Social[]>>;
@@ -15,6 +16,8 @@ interface IProps {
 const SocialItem = ({ social, setSocials, socials }: IProps) => {
   const { type, link } = social;
   const [isOpen, setIsOpen] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+
   const handleOpen = (): void => {
     setIsOpen(true);
   };
@@ -22,37 +25,61 @@ const SocialItem = ({ social, setSocials, socials }: IProps) => {
   const handleClose = (): void => {
     setIsOpen(false);
   };
+  const editHandler = (id: number): void => {
+    setIsEdited(true);
+  };
   const onDelete = (id: number) => {
     const cloneSocials = [...socials];
     const filteredsocials = cloneSocials.filter((s) => s.id !== id);
     setSocials(filteredsocials);
   };
+
   const { t } = useTranslation();
 
   return (
     <Grid
+      className={itemStyles.itemWrapper}
       sx={{ bgcolor: "background.middle" }}
-      className={itemStyles.socialItem}
     >
-      <div>
-        <p>
-          {t(`${type}`)} &nbsp; {t("linkField")}: {link}
-        </p>
+      <div className={itemStyles.socialItem}>
+        <div>
+          <p>
+            {t(`${type}`)} &nbsp; {t("linkField")}: {link}
+          </p>
+        </div>
+        <div>
+          <Button
+            variant="text"
+            color="error"
+            size="small"
+            onClick={handleOpen}
+          >
+            <DeleteIcon /> {t("dBtn")}
+          </Button>
+          <Button
+            variant="text"
+            size="small"
+            onClick={() => editHandler(social.id)}
+          >
+            <EditIcon /> {t("eBtn")}
+          </Button>
+        </div>
+        {isOpen && (
+          <ConfirmModal
+            isOpen={isOpen}
+            handleClose={handleClose}
+            onDelete={onDelete}
+            social={social}
+          />
+        )}
       </div>
-      <div>
-        <Button variant="text" color="error" size="small" onClick={handleOpen}>
-          <DeleteIcon /> {t("dBtn")}
-        </Button>
-        <Button variant="text" size="small">
-          <EditIcon /> {t("eBtn")}
-        </Button>
-      </div>
-      {isOpen && (
-        <ConfirmModal
-          isOpen={isOpen}
-          handleClose={handleClose}
-          onDelete={onDelete}
-          social={social}
+      {isEdited && (
+        <SocialForm
+          setIsOpen={setIsEdited}
+          isEdited={isEdited}
+          editedSocial={social}
+          socials={socials}
+          setSocials={setSocials}
         />
       )}
     </Grid>
