@@ -7,6 +7,7 @@ import { grey } from "@mui/material/colors";
 import withRoot from "./withRoot";
 import { useTranslation } from "react-i18next";
 import Layout from "../components/Layout";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
@@ -47,6 +48,7 @@ function getActiveTheme(themeMode: "light" | "dark") {
   return themeMode === "light" ? lightModeTheme : darkModeTheme;
 }
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
   const [activeTheme, setActiveTheme] = useState(lightModeTheme);
   const [selectedTheme, setSelectedTheme] = useState<"light" | "dark">("light");
   const { i18n } = useTranslation();
@@ -69,11 +71,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [selectedTheme]);
 
   return (
-    <ThemeProvider theme={activeTheme}>
-      <Layout toggleTheme={toggleTheme}>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={activeTheme}>
+        <Layout toggleTheme={toggleTheme}>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 export default withRoot(MyApp);

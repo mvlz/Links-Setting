@@ -1,17 +1,25 @@
 import itemStyles from "../styles/SocialItem.module.css";
 import { Button, Grid } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmModal from "./ConfirmModal";
 import { useTranslation } from "react-i18next";
 import { Social } from "../ts/interfaces";
 import SocialForm from "./SocialForm";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "react-query";
 interface IProps {
   social: Social;
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<any, unknown>>;
 }
 
-const SocialItem = ({ social }: IProps) => {
+const SocialItem = ({ social, refetch }: IProps) => {
   const { type, link } = social;
   const [isOpen, setIsOpen] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -22,6 +30,7 @@ const SocialItem = ({ social }: IProps) => {
 
   const handleClose = (): void => {
     setIsOpen(false);
+    refetch();
   };
   const editHandler = (): void => {
     setIsEdited(true);
@@ -65,6 +74,7 @@ const SocialItem = ({ social }: IProps) => {
           setIsOpen={setIsEdited}
           isEdited={isEdited}
           editedSocial={social}
+          refetch={refetch}
         />
       )}
     </Grid>

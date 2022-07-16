@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  RefetchOptions,
+  RefetchQueryFilters,
+  QueryObserverResult,
+} from "react-query";
 import { addNewData, updateData } from "../services/CRUDServices";
 import formStyles from "../styles/SocialForm.module.css";
 import { Social } from "../ts/interfaces";
@@ -19,11 +24,15 @@ interface FormProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isEdited?: boolean;
   editedSocial?: Social;
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<any, unknown>>;
 }
 const SocialForm: React.FunctionComponent<FormProps> = ({
   setIsOpen,
   isEdited,
   editedSocial,
+  refetch,
 }) => {
   const [option, setOption] = useState("");
   const [type, setType] = useState("");
@@ -44,9 +53,7 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
     if (!isEdited) {
       AddSocialAPI(social);
     } else {
-      updateData(editedSocial?.id, { type, link: option }).catch((er) =>
-        console.log(er)
-      );
+      updateSocial(editedSocial?.id, { type, link: option });
     }
     setIsOpen(false);
   };
@@ -59,9 +66,14 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
   const { t } = useTranslation();
 
   const AddSocialAPI = async (social: Social) => {
-    try {
-      await addNewData(social);
-    } catch (error) {}
+    const { data } = await addNewData(social);
+    refetch();
+    return data;
+  };
+  const updateSocial = async (id: number, item: Social) => {
+    const { data } = await updateData(id, item);
+    refetch();
+    return data;
   };
   useEffect(() => {
     if (isEdited) {

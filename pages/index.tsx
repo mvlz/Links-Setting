@@ -2,21 +2,27 @@ import { Button, Paper } from "@mui/material";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SocialForm from "../components/SocialForm";
 import SocialItem from "../components/SocialItem";
 import { Trans, useTranslation } from "react-i18next";
 import { Social } from "../ts/interfaces";
 import { getAllData } from "../services/CRUDServices";
+import { useQuery } from "react-query";
 
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [socials, setSocials] = useState<Social[]>([]);
 
+  const fetchSocials = async () => {
+    const { data } = await getAllData();
+    return data;
+  };
+  const { isLoading, error, data, refetch } = useQuery(
+    "socialsData",
+    fetchSocials
+  );
   const { t } = useTranslation();
-  useEffect(() => {
-    getAllData().then((res) => setSocials(res.data));
-  }, []);
+
   return (
     <Paper elevation={2} className={styles.mainBox}>
       <p className={styles.title}> {t("title")}</p>
@@ -29,10 +35,12 @@ const Home: NextPage = () => {
         <AddIcon />
         <Trans i18nKey="hBtn">trans</Trans>
       </Button>
-      {isOpen && <SocialForm setIsOpen={setIsOpen} />}
-      {socials &&
-        socials.map((social) => {
-          return <SocialItem key={social.id} social={social} />;
+      {isOpen && <SocialForm setIsOpen={setIsOpen} refetch={refetch} />}
+      {data &&
+        data.map((social: Social) => {
+          return (
+            <SocialItem key={social.id} social={social} refetch={refetch} />
+          );
         })}
     </Paper>
   );
