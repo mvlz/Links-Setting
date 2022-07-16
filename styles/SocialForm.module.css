@@ -3,12 +3,17 @@
 }
 .formWrapper {
   border-radius: 1rem;
+  padding: 0;
 }
 .title {
   margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.57;
 }
 .formBottom {
   margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
+  justify-content: flex-end;
 }

@@ -28,6 +28,7 @@ i18n
                     confirmText2: `please fill "Confirm".`,
                     confirmField: "Confirm*",
                     userSetting: "User Setting",
+                    editTitle: "Edit Social",
                 },
             },
             fa: {
@@ -51,6 +52,7 @@ i18n
                     confirmText2: `لطفا "تایید" را وارد نمایید.`,
                     confirmField: "تایید*",
                     userSetting: "تنظیمات کاربری",
+                    editTitle: "ویرایش مسیر ارتباطی",
                 }
             }
         },

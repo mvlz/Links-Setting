@@ -91,7 +91,9 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
     >
       <form className={formStyles.socialForm}>
         <p className={formStyles.title}>
-          {isEdited ? `Edit Social ${editedSocial?.type}` : t("hBtn")}
+          {isEdited
+            ? `${t("editTitle")} ${t(`${editedSocial?.type}`)}`
+            : t("sBtn")}
         </p>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
@@ -127,7 +129,9 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
         </Grid>
         <div className={formStyles.formBottom}>
           <Button variant="contained" onClick={clickHandler}>
-            {isEdited ? `Edit Social ${editedSocial?.type}` : t("sBtn")}
+            {isEdited
+              ? `${t("editTitle")} ${t(`${editedSocial?.type}`)}`
+              : t("sBtn")}
           </Button>
           <Button variant="outlined" onClick={() => setIsOpen(false)}>
             {t("cBtn")}
