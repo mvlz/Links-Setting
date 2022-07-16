@@ -9,11 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-interface Social {
-  id: number;
-  type?: string;
-  link?: string;
-}
+import { Social } from "../ts/interfaces";
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;

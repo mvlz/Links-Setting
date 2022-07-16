@@ -1,4 +1,4 @@
-import { Button, Grid, Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import AddIcon from "@mui/icons-material/Add";
@@ -6,11 +6,8 @@ import { useState } from "react";
 import SocialForm from "../components/SocialForm";
 import SocialItem from "../components/SocialItem";
 import { Trans, useTranslation } from "react-i18next";
-interface Social {
-  id: number;
-  type?: string;
-  link?: string;
-}
+import { Social } from "../ts/interfaces";
+
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [socials, setSocials] = useState<Social[]>([]);

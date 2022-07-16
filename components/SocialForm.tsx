@@ -11,11 +11,8 @@ import {
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import formStyles from "../styles/SocialForm.module.css";
-interface Social {
-  id: number;
-  type?: string;
-  link?: string;
-}
+import { Social } from "../ts/interfaces";
+
 const SocialForm: React.FunctionComponent<{
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setSocial: Dispatch<SetStateAction<Social | null>>;

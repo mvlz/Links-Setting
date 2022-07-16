@@ -5,12 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmModal from "./ConfirmModal";
 import { useTranslation } from "react-i18next";
-
-interface Social {
-  id: number;
-  type?: string;
-  link?: string;
-}
+import { Social } from "../ts/interfaces";
 interface IProps {
   social: Social;
   onDelete: (id: number) => void;
