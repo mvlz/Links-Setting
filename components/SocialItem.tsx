@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmModal from "./ConfirmModal";
+import { useTranslation } from "react-i18next";
 
 interface Social {
   id: number;
@@ -16,7 +17,7 @@ interface IProps {
 }
 
 const SocialItem = ({ social, onDelete }: IProps) => {
-  const { id, type, link } = social;
+  const { type, link } = social;
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = (): void => {
     setIsOpen(true);
@@ -25,6 +26,8 @@ const SocialItem = ({ social, onDelete }: IProps) => {
   const handleClose = () => {
     setIsOpen(false);
   };
+  const { t } = useTranslation();
+
   return (
     <Grid
       sx={{ bgcolor: "background.middle" }}
@@ -32,15 +35,15 @@ const SocialItem = ({ social, onDelete }: IProps) => {
     >
       <div>
         <p>
-          {type} &nbsp; link: {link}
+          {t(`${type}`)} &nbsp; {t("linkField")}: {link}
         </p>
       </div>
       <div>
         <Button variant="text" color="error" size="small" onClick={handleOpen}>
-          <DeleteIcon /> DELETE
+          <DeleteIcon /> {t("dBtn")}
         </Button>
         <Button variant="text" size="small">
-          <EditIcon /> EDIT
+          <EditIcon /> {t("eBtn")}
         </Button>
       </div>
       {isOpen && (
@@ -48,7 +51,7 @@ const SocialItem = ({ social, onDelete }: IProps) => {
           isOpen={isOpen}
           handleClose={handleClose}
           onDelete={onDelete}
-          id={id}
+          social={social}
         />
       )}
     </Grid>

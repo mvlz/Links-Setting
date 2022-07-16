@@ -50,6 +50,7 @@ const Home: NextPage = (props: HomeProps) => {
             Toggle Theme
           </Button>
           <Paper elevation={2} className={styles.mainBox}>
+            <p className={styles.title}> {t("title")}</p>
             <Button
               variant="text"
               size="small"

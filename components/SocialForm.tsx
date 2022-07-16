@@ -9,33 +9,8 @@ import {
   TextField,
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { useTranslation } from "react-i18next";
 import formStyles from "../styles/SocialForm.module.css";
-const optionList = [
-  {
-    value: "instagram",
-    label: "instagram",
-  },
-  {
-    value: "telegram",
-    label: "telegram",
-  },
-  {
-    value: "tweeter",
-    label: "tweeter",
-  },
-  {
-    value: "facebook",
-    label: "facebook",
-  },
-  {
-    value: "website",
-    label: "website",
-  },
-  {
-    value: "linkedin",
-    label: "linkedin",
-  },
-];
 interface Social {
   id: number;
   type?: string;
@@ -67,17 +42,45 @@ const SocialForm: React.FunctionComponent<{
     setType("");
     setSocial(null);
   };
+  const { t } = useTranslation();
+
+  const optionList = [
+    {
+      value: "instagram",
+      label: t("instagram"),
+    },
+    {
+      value: "telegram",
+      label: t("telegram"),
+    },
+    {
+      value: "tweeter",
+      label: t("tweeter"),
+    },
+    {
+      value: "facebook",
+      label: t("facebook"),
+    },
+    {
+      value: "website",
+      label: t("website"),
+    },
+    {
+      value: "linkedin",
+      label: t("linkedin"),
+    },
+  ];
   return (
     <Container
       sx={{ bgcolor: "background.middle" }}
       className={formStyles.formWrapper}
     >
       <form className={formStyles.socialForm}>
-        <p className={formStyles.title}>Add social</p>
+        <p className={formStyles.title}>{t("hBtn")}</p>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
-              <InputLabel id="label">Type</InputLabel>
+              <InputLabel id="label">{t("typeField")}</InputLabel>
               <Select
                 labelId="label"
                 id="select"
@@ -98,7 +101,7 @@ const SocialForm: React.FunctionComponent<{
             <TextField
               fullWidth
               id="outlined-basic"
-              label="Link"
+              label={t("linkField")}
               variant="outlined"
               onChange={(e) => changeLinkHandler(e)}
               name="link"
@@ -108,10 +111,10 @@ const SocialForm: React.FunctionComponent<{
         </Grid>
         <div className={formStyles.formBottom}>
           <Button variant="contained" onClick={clickHandler}>
-            Add
+            {t("sBtn")}
           </Button>
           <Button variant="outlined" onClick={() => setIsOpen(false)}>
-            cancel
+            {t("cBtn")}
           </Button>
         </div>
       </form>
