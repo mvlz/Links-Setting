@@ -9,3 +9,20 @@
   border-radius: 0.75rem;
   width: 100%;
 }
+.linkTitle {
+  font-size: 0.7rem;
+}
+.typeTitle {
+  font-size: 0.875rem;
+}
+.link {
+  color: #ffa82e;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.textBox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

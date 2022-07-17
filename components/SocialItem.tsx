@@ -44,10 +44,17 @@ const SocialItem = ({ social, refetch, data }: IProps) => {
       sx={{ bgcolor: "background.middle" }}
     >
       <div className={itemStyles.socialItem}>
-        <div>
-          <p>
-            {t(`${type}`)} &nbsp; {t("linkField")}: {link}
-          </p>
+        <div className={itemStyles.textBox}>
+          <p className={itemStyles.typeTitle}>{t(`${type}`)}</p>{" "}
+          <p className={itemStyles.linkTitle}>{t("linkField")}:</p>{" "}
+          <a
+            className={itemStyles.link}
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {link}
+          </a>
         </div>
         <div>
           <Button variant="text" size="small" onClick={editHandler}>
