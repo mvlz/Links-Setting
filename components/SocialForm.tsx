@@ -41,8 +41,8 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
   const { t } = useTranslation();
 
   const initialValues = {
-    type: "",
-    link: "",
+    type: isEdited ? editedSocial?.type : "",
+    link: isEdited ? editedSocial?.link : "",
   };
   const validationSchema = Yup.object({
     type: Yup.string().required(`${t("requiredField")}`),
@@ -53,10 +53,13 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
       )
       .required(`${t("requiredField")}`),
   });
-
+  const onSubmit = () => {
+    console.log("submitted");
+  };
   const formik = useFormik({
     initialValues,
-    submitHandler,
+    enableReinitialize: true,
+    onSubmit,
     validationSchema,
     validateOnMount: true,
   });
@@ -99,7 +102,7 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
       sx={{ bgcolor: "background.middle" }}
       className={formStyles.formWrapper}
     >
-      <form className={formStyles.socialForm}>
+      <form className={formStyles.socialForm} onSubmit={formik.handleSubmit}>
         <p className={formStyles.title}>
           {isEdited
             ? `${t("editTitle")} ${t(`${editedSocial?.type}`)}`
