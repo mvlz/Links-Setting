@@ -45,10 +45,13 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
     link: "",
   };
   const validationSchema = Yup.object({
-    type: Yup.string().required(`${t("validation")}`),
+    type: Yup.string().required(`${t("requiredField")}`),
     link: Yup.string()
-      .url()
-      .required(`${t("validation")}`),
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        `${t("validation")}`
+      )
+      .required(`${t("requiredField")}`),
   });
 
   const formik = useFormik({

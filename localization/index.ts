@@ -29,7 +29,8 @@ i18n
                     confirmField: "Confirm*",
                     userSetting: "User Setting",
                     editTitle: "Edit Social",
-                    validation: "This field is required.",
+                    requiredField: "This field is required.",
+                    validation: "Link must be a valid URL",
                 },
             },
             fa: {
@@ -54,7 +55,8 @@ i18n
                     confirmField: "تایید*",
                     userSetting: "تنظیمات کاربری",
                     editTitle: "ویرایش مسیر ارتباطی",
-                    validation: "پر کردن این فیلد الزامی است.",
+                    requiredField: "پر کردن این فیلد الزامی است.",
+                    validation: "لینک باید یک URL معتبر باشد.",
                 }
             }
         },
