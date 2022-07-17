@@ -30,12 +30,14 @@ interface FormProps {
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
   ) => Promise<QueryObserverResult<any, unknown>>;
+  data?: any;
 }
 const SocialForm: React.FunctionComponent<FormProps> = ({
   setIsOpen,
   isEdited,
   editedSocial,
   refetch,
+  data,
 }) => {
   const [social, setSocial] = useState<Social | null>(null);
   const { t } = useTranslation();
@@ -45,13 +47,16 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
     link: isEdited ? editedSocial?.link : "",
   };
   const validationSchema = Yup.object({
-    type: Yup.string().required(`${t("requiredField")}`),
+    type: Yup.string().required(`${t("requiredError")}`),
     link: Yup.string()
       .matches(
         /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        `${t("validation")}`
+        `${t("validURLError")}`
       )
-      .required(`${t("requiredField")}`),
+      .required(`${t("requiredField")}`)
+      .test("Unique", `${t("duplicatedError")}`, (data) => {
+        return new Set(data).size === data?.length;
+      }),
   });
   const onSubmit = () => {
     console.log("submitted");

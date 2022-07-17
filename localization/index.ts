@@ -29,8 +29,9 @@ i18n
                     confirmField: "Confirm*",
                     userSetting: "User Setting",
                     editTitle: "Edit Social",
-                    requiredField: "This field is required.",
-                    validation: "Link must be a valid URL",
+                    requiredError: "This field is required.",
+                    validURLError: "Link must be a valid URL",
+                    duplicatedError: "This link already exists.",
                 },
             },
             fa: {
@@ -55,8 +56,9 @@ i18n
                     confirmField: "تایید*",
                     userSetting: "تنظیمات کاربری",
                     editTitle: "ویرایش مسیر ارتباطی",
-                    requiredField: "پر کردن این فیلد الزامی است.",
-                    validation: "لینک باید یک URL معتبر باشد.",
+                    requiredError: "پر کردن این فیلد الزامی است.",
+                    validURLError: "لینک باید یک URL معتبر باشد.",
+                    duplicatedError: "این لینک از قبل وجود دارد.",
                 }
             }
         },

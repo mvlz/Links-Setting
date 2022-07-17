@@ -35,7 +35,9 @@ const Home: NextPage = () => {
         <AddIcon />
         <Trans i18nKey="hBtn">trans</Trans>
       </Button>
-      {isOpen && <SocialForm setIsOpen={setIsOpen} refetch={refetch} />}
+      {isOpen && (
+        <SocialForm setIsOpen={setIsOpen} refetch={refetch} data={data} />
+      )}
       {isLoading ? (
         <CircularProgress className={styles.loading} />
       ) : error ? (
