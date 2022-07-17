@@ -1,0 +1,24 @@
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.title {
+  font-family: "Vazirmatn";
+  font-weight: 500;
+  font-size: 1.07rem;
+  line-height: 1.6;
+}
+.text {
+  font-family: iranyekan, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.wrapper {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

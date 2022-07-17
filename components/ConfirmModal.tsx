@@ -1,13 +1,7 @@
+import modalStyles from "../styles/ConfirmModal.module.css";
 import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Social } from "../ts/interfaces";
 import { deleteData } from "../services/CRUDServices";
@@ -43,12 +37,12 @@ const ConfirmModal = ({ isOpen, handleClose, social }: ModalProps) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{t("confirmTitle")}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+        <div className={modalStyles.wrapper}>
+          <p className={modalStyles.title}>{t("confirmTitle")}</p>
+          <p id="alert-dialog-description" className={modalStyles.text}>
             {t("confirmText1")} <strong>{t(`${social.type}`)}</strong>{" "}
             {t("confirmText2")}
-          </DialogContentText>
+          </p>
           <TextField
             fullWidth
             id="outlined-basic"
@@ -56,20 +50,20 @@ const ConfirmModal = ({ isOpen, handleClose, social }: ModalProps) => {
             variant="outlined"
             onChange={(e) => confirmHandler(e)}
           />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} variant="outlined" size="small">
-            {t("cBtn")}
-          </Button>
-          <Button
-            disabled={isDisable}
-            onClick={deleteHandler}
-            size="small"
-            variant="contained"
-          >
-            {t("dBtn")}
-          </Button>
-        </DialogActions>
+          <div className={modalStyles.buttonContainer}>
+            <Button onClick={handleClose} variant="outlined" size="small">
+              {t("cBtn")}
+            </Button>
+            <Button
+              disabled={isDisable}
+              onClick={deleteHandler}
+              size="small"
+              variant="contained"
+            >
+              {t("dBtn")}
+            </Button>
+          </div>
+        </div>
       </Dialog>
     </div>
   );
