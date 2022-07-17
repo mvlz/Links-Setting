@@ -7,16 +7,12 @@
   gap: 0.5rem;
   align-items: flex-start;
 }
-
-.title a {
-  color: #0070f3;
-  text-decoration: none;
+.loading {
+  margin: auto;
 }
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
+.error {
+  margin: auto;
+  color: #f44336;
 }
 
 .title {
@@ -24,39 +20,4 @@
   line-height: 1.15;
   font-size: 0.65rem;
   font-weight: 400;
-}
-
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
 }

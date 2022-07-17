@@ -1,4 +1,4 @@
-import { Button, Paper } from "@mui/material";
+import { Button, CircularProgress, Paper } from "@mui/material";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import AddIcon from "@mui/icons-material/Add";
@@ -36,12 +36,18 @@ const Home: NextPage = () => {
         <Trans i18nKey="hBtn">trans</Trans>
       </Button>
       {isOpen && <SocialForm setIsOpen={setIsOpen} refetch={refetch} />}
-      {data &&
+      {isLoading ? (
+        <CircularProgress className={styles.loading} />
+      ) : error ? (
+        <h4 className={styles.error}>{error?.message}</h4>
+      ) : (
+        data &&
         data.map((social: Social) => {
           return (
             <SocialItem key={social.id} social={social} refetch={refetch} />
           );
-        })}
+        })
+      )}
     </Paper>
   );
 };
