@@ -12,17 +12,16 @@ interface ModalProps {
 }
 const ConfirmModal = ({ isOpen, handleClose, social }: ModalProps) => {
   const [isDisable, setIsDisable] = useState(true);
-
+  const { t } = useTranslation();
   const confirmHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (e.target.value.toLowerCase() === "confirm") {
+    if (e.target.value === `${t("confirmField")}`) {
       setIsDisable(false);
     } else {
       setIsDisable(true);
     }
   };
-  const { t } = useTranslation();
   const deleteHandler = async () => {
     try {
       await deleteData(social.id);

@@ -62,7 +62,7 @@ i18n
                 }
             }
         },
-        fallbackLng: "en",
+        fallbackLng: "fa",
         debug: false,
 
         ns: ["translations"],
