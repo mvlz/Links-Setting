@@ -54,8 +54,8 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
         `${t("validURLError")}`
       )
       .required(`${t("requiredField")}`)
-      .test("Unique", `${t("duplicatedError")}`, (data) => {
-        return new Set(data).size === data?.length;
+      .test("Unique", `${t("duplicatedError")}`, (value) => {
+        return !data.some((i: Social) => i.link === value);
       }),
   });
   const onSubmit = () => {
@@ -155,7 +155,11 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
           </Grid>
         </Grid>
         <div className={formStyles.formBottom}>
-          <Button variant="contained" onClick={clickHandler}>
+          <Button
+            variant="contained"
+            onClick={clickHandler}
+            disabled={!formik.isValid}
+          >
             {isEdited
               ? `${t("editTitle")} ${t(`${editedSocial?.type}`)}`
               : t("sBtn")}

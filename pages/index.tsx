@@ -46,7 +46,12 @@ const Home: NextPage = () => {
         data &&
         data.map((social: Social) => {
           return (
-            <SocialItem key={social.id} social={social} refetch={refetch} />
+            <SocialItem
+              key={social.id}
+              social={social}
+              refetch={refetch}
+              data={data}
+            />
           );
         })
       )}

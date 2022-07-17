@@ -17,9 +17,10 @@ interface IProps {
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
   ) => Promise<QueryObserverResult<any, unknown>>;
+  data: any;
 }
 
-const SocialItem = ({ social, refetch }: IProps) => {
+const SocialItem = ({ social, refetch, data }: IProps) => {
   const { type, link } = social;
   const [isOpen, setIsOpen] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -75,6 +76,7 @@ const SocialItem = ({ social, refetch }: IProps) => {
           isEdited={isEdited}
           editedSocial={social}
           refetch={refetch}
+          data={data}
         />
       )}
     </Grid>
