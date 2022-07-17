@@ -10,3 +10,7 @@
   flex-direction: row-reverse;
   gap: 1rem;
 }
+.title {
+  font-weight: 500;
+  font-size: 1.07rem;
+}

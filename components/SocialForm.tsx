@@ -53,7 +53,7 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
         /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
         `${t("validURLError")}`
       )
-      .required(`${t("requiredField")}`)
+      .required(`${t("requiredError")}`)
       .test("Unique", `${t("duplicatedError")}`, (value) => {
         return !data.some((i: Social) => i.link === value);
       }),
@@ -156,16 +156,21 @@ const SocialForm: React.FunctionComponent<FormProps> = ({
         </Grid>
         <div className={formStyles.formBottom}>
           <Button
+            variant="outlined"
+            onClick={() => setIsOpen(false)}
+            size="small"
+          >
+            {t("cBtn")}
+          </Button>
+          <Button
             variant="contained"
             onClick={clickHandler}
             disabled={!formik.isValid}
+            size="small"
           >
             {isEdited
               ? `${t("editTitle")} ${t(`${editedSocial?.type}`)}`
               : t("sBtn")}
-          </Button>
-          <Button variant="outlined" onClick={() => setIsOpen(false)}>
-            {t("cBtn")}
           </Button>
         </div>
       </form>

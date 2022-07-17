@@ -16,7 +16,7 @@ const Navbar = (props: NavProps) => {
   };
   return (
     <nav className={navbarStyles.navbar}>
-      <h4>{t("userSetting")}</h4>
+      <h6 className={navbarStyles.title}>{t("userSetting")}</h6>
       <div className={navbarStyles.buttonContainer}>
         <Button onClick={props.toggleTheme} color={"info"}>
           {palette.mode === "dark" ? (

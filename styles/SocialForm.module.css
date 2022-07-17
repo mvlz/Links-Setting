@@ -1,5 +1,7 @@
 .socialForm {
   padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
 }
 .formWrapper {
   border-radius: 1rem;

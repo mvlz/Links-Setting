@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500&display=swap");
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Vazirmatn", sans-serif, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
 }
 
 a {
@@ -15,4 +18,11 @@ a {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+button,
+p,
+label {
+  font-family: "Vazirmatn", sans-serif !important;
+  font-weight: 400;
+  gap: 0.5rem;
 }

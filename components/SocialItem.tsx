@@ -50,6 +50,9 @@ const SocialItem = ({ social, refetch, data }: IProps) => {
           </p>
         </div>
         <div>
+          <Button variant="text" size="small" onClick={editHandler}>
+            <EditIcon /> {t("eBtn")}
+          </Button>
           <Button
             variant="text"
             color="error"
@@ -58,18 +61,15 @@ const SocialItem = ({ social, refetch, data }: IProps) => {
           >
             <DeleteIcon /> {t("dBtn")}
           </Button>
-          <Button variant="text" size="small" onClick={editHandler}>
-            <EditIcon /> {t("eBtn")}
-          </Button>
         </div>
-        {isOpen && (
-          <ConfirmModal
-            isOpen={isOpen}
-            handleClose={handleClose}
-            social={social}
-          />
-        )}
       </div>
+      {isOpen && (
+        <ConfirmModal
+          isOpen={isOpen}
+          handleClose={handleClose}
+          social={social}
+        />
+      )}
       {isEdited && (
         <SocialForm
           setIsOpen={setIsEdited}
